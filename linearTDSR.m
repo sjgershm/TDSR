@@ -27,9 +27,12 @@ function results = linearTDSR(X,r,opto)
     alpha_u = 0.1;
     gamma = 0.95;
     if nargin < 3; opto = zeros(N,1); end
+    E = zeros(1,D);
+    lambda = 0.8;
     
     for n = 1:N
-        dt = X(n,:) + (gamma*X(n+1,:) - X(n,:))*W + opto(n);
+        E = lambda*E + X(n,:);
+        dt = X(n,:) + (gamma*X(n+1,:) - X(n,:))*W + opto(n)*E;
         
         % store results
         results(n).R = X(n,:)*u;
